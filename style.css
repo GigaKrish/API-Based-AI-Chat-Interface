@@ -21,7 +21,7 @@
     --border-light: #dcfce7; /* Lime Border */
     
     /* Dark Theme: "Vivid Cyan" */
-    --text-primary-dark: #fafafa; /* Brighter text for high contrast */
+    --text-primary-dark: #fafafa;
     --text-secondary-dark: #a1a1aa;
     --bg-dark: #121212;
     --header-bg-dark: rgba(18, 18, 18, 0.8);
@@ -88,19 +88,33 @@ body.dark .header { background: var(--header-bg-dark); border-bottom-color: var(
 /* --- REFINED HEADER ICON & TITLE --- */
 .header-icon {
     color: var(--primary-color-light);
-    animation: iconGlow 4s ease-in-out infinite;
-    transform: scale(1.1); /* Slightly larger icon */
 }
 body.dark .header-icon { color: var(--primary-color-dark); }
 
-/* New, more subtle animation for the icon */
-@keyframes iconGlow {
-    0%, 100% { filter: drop-shadow(0 0 1px transparent); }
-    50% { filter: drop-shadow(0 0 4px var(--primary-glow-light)); }
+/* New Blinking Animation */
+.icon-eye-open, .icon-eye-closed {
+    animation-duration: 3s; /* Slower, more natural blink */
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
 }
-body.dark @keyframes iconGlow {
-    0%, 100% { filter: drop-shadow(0 0 1px transparent); }
-    50% { filter: drop-shadow(0 0 4px var(--primary-glow-dark)); }
+.icon-eye-open {
+    animation-name: blink-open;
+}
+.icon-eye-closed {
+    animation-name: blink-closed;
+    font-size: 12px; /* Make degree symbol larger */
+    font-weight: bold;
+    fill: currentColor;
+}
+
+@keyframes blink-open {
+    0%, 95%, 100% { opacity: 1; }
+    96%, 99% { opacity: 0; }
+}
+
+@keyframes blink-closed {
+    0%, 95%, 100% { opacity: 0; }
+    96%, 99% { opacity: 1; }
 }
 
 .header-title {
@@ -108,16 +122,60 @@ body.dark @keyframes iconGlow {
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 30px rgba(0,0,0,0.1); /* Adds subtle depth */
+    text-shadow: 0 0 30px rgba(0,0,0,0.1);
 }
-/* CORRECTED dark mode title for visibility */
 body.dark .header-title {
     background: none;
-    -webkit-text-fill-color: initial; /* Resets the transparent fill */
-    color: var(--text-primary-dark); /* Uses the high-contrast text color */
+    -webkit-text-fill-color: initial;
+    color: var(--text-primary-dark);
 }
 
 .header-actions { display: flex; align-items: center; gap: 1rem; }
+
+/* --- NEW THEME TILE STYLES --- */
+.theme-tile {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 0.25rem 0.25rem 0.25rem 0.75rem;
+    border-radius: 999px; /* Pill shape */
+    border: 1px solid var(--border-light);
+    transition: all 0.3s ease;
+}
+body.dark .theme-tile {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-color: var(--border-dark);
+}
+.theme-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-secondary-light);
+}
+body.dark .theme-label {
+    color: var(--text-secondary-dark);
+}
+#theme-toggle {
+    background-color: white;
+}
+body.dark #theme-toggle {
+    background-color: var(--bubble-bg-dark);
+}
+#theme-toggle:hover {
+    background-color: #f0f0f0;
+}
+body.dark #theme-toggle:hover {
+    background-color: #3f3f46;
+}
+
+/* --- ICON VISIBILITY LOGIC --- */
+.icon-moon { display: none; }
+.icon-sun { display: block; }
+
+body.dark .icon-moon { display: block; }
+body.dark .icon-sun { display: none; }
+
+
 .status { display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; color: var(--text-secondary-light); }
 body.dark .status { color: var(--text-secondary-dark); }
 .status-dot { width: 8px; height: 8px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite; }
@@ -126,10 +184,16 @@ body.dark .status { color: var(--text-secondary-dark); }
 /* --- CHAT CONTAINER --- */
 .chat-container { flex: 1; padding: 1.5rem; overflow-y: auto; display: flex; flex-direction: column; gap: 1rem; }
 .message-wrapper { display: flex; align-items: flex-end; gap: 0.75rem; max-width: 85%; animation: slideIn 0.5s cubic-bezier(0.25, 1, 0.5, 1); }
-.message-wrapper.user { flex-direction: row-reverse; align-self: flex-end; }
+
+/* --- UPDATED USER MESSAGE WRAPPER --- */
+.message-wrapper.user {
+    flex-direction: column; /* Stack bubble and label vertically */
+    align-items: flex-end; /* Keep everything to the right */
+    gap: 0.25rem; /* Small gap between bubble and label */
+}
 @keyframes slideIn { from { opacity: 0; transform: translateY(20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
-/* --- REFINED AVATARS --- */
+/* --- AVATAR STYLES (NOW ONLY FOR AI) --- */
 .avatar {
     width: 36px;
     height: 36px;
@@ -142,13 +206,23 @@ body.dark .status { color: var(--text-secondary-dark); }
     flex-shrink: 0;
     color: white;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 0 0 3px var(--bg-light); /* Creates a separation from the background */
+    box-shadow: 0 0 0 3px var(--bg-light);
 }
 body.dark .avatar { box-shadow: 0 0 0 3px var(--bg-dark); }
-.avatar.user { background: var(--primary-color-light); }
-.avatar.ai { background: #4ade80; } /* Light Green */
-body.dark .avatar.user { background: var(--primary-color-dark); }
+.avatar.ai { background: #4ade80; }
 body.dark .avatar.ai { background: var(--primary-color-dark); } 
+
+/* --- NEW USER LABEL STYLES --- */
+.user-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-secondary-light); /* Dark grey for light mode */
+    padding-right: 0.75rem; /* Align it nicely with the bubble */
+}
+body.dark .user-label {
+    color: var(--text-primary-dark); /* White for dark mode */
+}
+
 
 /* --- REFINED MESSAGE BUBBLES --- */
 .message-bubble {
@@ -166,7 +240,6 @@ body.dark .avatar.ai { background: var(--primary-color-dark); }
 .message-bubble.user { background: var(--primary-color-light); color: white; border-bottom-right-radius: 0.25rem; }
 .message-bubble.ai { background: var(--bubble-bg-light); color: var(--text-primary-light); border: 1px solid var(--border-light); border-bottom-left-radius: 0.25rem; }
 body.dark .message-bubble.user { background: var(--primary-color-dark); }
-/* CORRECTED AI BUBBLE FOR DARK MODE */
 body.dark .message-bubble.ai {
     background: var(--bubble-bg-dark);
     color: var(--text-primary-dark);

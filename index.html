@@ -12,20 +12,30 @@
     <div class="app-container">
         <header class="header">
             <h1>
-                <!-- New Animated SVG Icon -->
-                <svg class="header-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Icon with blinking animation elements -->
+                <svg class="header-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M9 12C9 13.3807 10.1193 14.5 11.5 14.5C12.8807 14.5 14 13.3807 14 12C14 10.6193 12.8807 9.5 11.5 9.5C10.1193 9.5 9 10.6193 9 12Z" stroke="currentColor" stroke-width="1.5"/>
                     <path d="M2 12C2 7.28603 2 4.92897 3.46447 3.46447C4.92897 2 7.28603 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92897 22 7.28603 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28603 22 4.92897 22 3.46447 20.5355C2 19.0711 2 16.714 2 12Z" stroke="currentColor" stroke-width="1.5"/>
-                    <path d="M6 8.5C6.27614 8.5 6.5 8.27614 6.5 8C6.5 7.72386 6.27614 7.5 6 7.5C5.72386 7.5 5.5 7.72386 5.5 8C5.5 8.27614 5.72386 8.5 6 8.5Z" fill="currentColor"/>
-                    <path d="M17 8.5C17.2761 8.5 17.5 8.27614 17.5 8C17.5 7.72386 17.2761 7.5 17 7.5C16.7239 7.5 16.5 7.72386 16.5 8C16.5 8.27614 16.7239 8.5 17 8.5Z" fill="currentColor"/>
+                    <!-- Original eyes -->
+                    <path class="icon-eye-open" d="M6 8.5C6.27614 8.5 6.5 8.27614 6.5 8C6.5 7.72386 6.27614 7.5 6 7.5C5.72386 7.5 5.5 7.72386 5.5 8C5.5 8.27614 5.72386 8.5 6 8.5Z" fill="currentColor"/>
+                    <path class="icon-eye-open" d="M17 8.5C17.2761 8.5 17.5 8.27614 17.5 8C17.5 7.72386 17.2761 7.5 17 7.5C16.7239 7.5 16.5 7.72386 16.5 8C16.5 8.27614 16.7239 8.5 17 8.5Z" fill="currentColor"/>
+                    <!-- Blinking eyes (degree symbols) -->
+                    <text class="icon-eye-closed" x="6" y="9.5" text-anchor="middle">°</text>
+                    <text class="icon-eye-closed" x="17" y="9.5" text-anchor="middle">°</text>
                 </svg>
-                <!-- Gradient Header Title -->
                 <span class="header-title">AI Assistant</span>
             </h1>
             <div class="header-actions">
-                <button id="theme-toggle" class="action-btn" title="Toggle Theme">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-                </button>
+                <!-- Final Theme Tile Structure -->
+                <div class="theme-tile">
+                    <span class="theme-label">Theme</span>
+                    <button id="theme-toggle" class="action-btn" title="Toggle Theme">
+                        <!-- Sun Icon for Light Mode -->
+                        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                        <!-- Moon Icon for Dark Mode -->
+                        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    </button>
+                </div>
                 <div class="status">
                     <div class="status-dot"></div>
                     <span>Online</span>
@@ -34,7 +44,6 @@
         </header>
 
         <div class="chat-container" id="chatContainer">
-            <!-- Initial welcome message -->
             <div class="message-wrapper ai bounce-in">
                 <div class="avatar ai">AI</div>
                 <div class="message-bubble ai">
@@ -43,7 +52,6 @@
             </div>
         </div>
 
-        <!-- Input area for user messages -->
         <div class="input-area">
             <div class="input-wrapper">
                 <div class="image-preview" id="imagePreview">
@@ -63,11 +71,9 @@
             </div>
         </div>
     </div>
-    <!-- External libraries for Markdown parsing and code highlighting -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
-    <!-- Application scripts -->
     <script src="api.js"></script>
     <script src="ui.js"></script>
 </body>

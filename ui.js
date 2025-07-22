@@ -120,13 +120,18 @@ class ChatApp {
 
     addMessage(text, sender, imageSrc = null) {
         const messageWrapper = this.createMessageWrapper(sender);
-        const avatar = this.createAvatar(sender);
         const messageBubble = this.createMessageBubble(sender, text, imageSrc);
 
         if (sender === 'user') {
             messageWrapper.appendChild(messageBubble);
-            messageWrapper.appendChild(avatar);
+            // Create and append the new text label instead of the avatar
+            const userLabel = document.createElement('div');
+            userLabel.className = 'user-label';
+            userLabel.textContent = 'You';
+            messageWrapper.appendChild(userLabel);
         } else {
+            // AI still uses the circular avatar
+            const avatar = this.createAvatar(sender);
             messageWrapper.appendChild(avatar);
             messageWrapper.appendChild(messageBubble);
         }
@@ -144,7 +149,7 @@ class ChatApp {
     createAvatar(sender) {
         const avatar = document.createElement('div');
         avatar.className = `avatar ${sender}`;
-        avatar.textContent = sender === 'user' ? 'You' : 'AI';
+        avatar.textContent = 'AI';
         return avatar;
     }
 
