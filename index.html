@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chat Assistant</title>
+    <!-- Prism JS for code syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <h1>
+                <!-- New Animated SVG Icon -->
+                <svg class="header-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 12C9 13.3807 10.1193 14.5 11.5 14.5C12.8807 14.5 14 13.3807 14 12C14 10.6193 12.8807 9.5 11.5 9.5C10.1193 9.5 9 10.6193 9 12Z" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M2 12C2 7.28603 2 4.92897 3.46447 3.46447C4.92897 2 7.28603 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92897 22 7.28603 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28603 22 4.92897 22 3.46447 20.5355C2 19.0711 2 16.714 2 12Z" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M6 8.5C6.27614 8.5 6.5 8.27614 6.5 8C6.5 7.72386 6.27614 7.5 6 7.5C5.72386 7.5 5.5 7.72386 5.5 8C5.5 8.27614 5.72386 8.5 6 8.5Z" fill="currentColor"/>
+                    <path d="M17 8.5C17.2761 8.5 17.5 8.27614 17.5 8C17.5 7.72386 17.2761 7.5 17 7.5C16.7239 7.5 16.5 7.72386 16.5 8C16.5 8.27614 16.7239 8.5 17 8.5Z" fill="currentColor"/>
+                </svg>
+                <!-- Gradient Header Title -->
+                <span class="header-title">AI Assistant</span>
+            </h1>
+            <div class="header-actions">
+                <button id="theme-toggle" class="action-btn" title="Toggle Theme">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+                <div class="status">
+                    <div class="status-dot"></div>
+                    <span>Online</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="chat-container" id="chatContainer">
+            <!-- Initial welcome message -->
+            <div class="message-wrapper ai bounce-in">
+                <div class="avatar ai">AI</div>
+                <div class="message-bubble ai">
+                    <p>Hello! I'm your AI assistant. How can I help you today?</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input area for user messages -->
+        <div class="input-area">
+            <div class="input-wrapper">
+                <div class="image-preview" id="imagePreview">
+                    <img id="previewImg" src="" alt="Image Preview">
+                    <button class="remove-btn" id="removeImageBtn">×</button>
+                </div>
+                <textarea id="messageInput" placeholder="Type your message or drop an image..." rows="1"></textarea>
+                <input type="file" id="imageInput" accept="image/*" style="display: none;">
+                <div class="action-buttons">
+                    <button class="action-btn" id="imageBtn" title="Upload Image">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21,15 16,10 5,21"></polyline></svg>
+                    </button>
+                    <button class="action-btn primary" id="sendBtn" title="Send Message" disabled>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22,2 15,22 11,13 2,9 22,2"></polygon></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- External libraries for Markdown parsing and code highlighting -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <!-- Application scripts -->
+    <script src="api.js"></script>
+    <script src="ui.js"></script>
+</body>
+</html>
