@@ -1,3 +1,4 @@
+// Renamed from GeminiAPI to be more generic
 class AiApi {
     constructor() {
         // This now points to our single, smart serverless function.
@@ -29,3 +30,4 @@ class AiApi {
             return `An error occurred: ${error.message}`;
         }
     }
+}

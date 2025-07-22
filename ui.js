@@ -1,22 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const GEMINI_API_KEY = 'YOU_API_KEY';
-
-    if (GEMINI_API_KEY === 'YOUR_API_KEY') {
-        alert('Please replace "YOUR_API_KEY" in ui.js with your actual Gemini API key.');
-    }
-
-
-    new ChatApp(GEMINI_API_KEY);
+    // No API key logic is needed here anymore.
+    new ChatApp(); 
 });
 
 class ChatApp {
-    constructor(apiKey) {
-        this.geminiApi = new GeminiAPI(apiKey);
+    constructor() { 
+        // Use the new, more generic class name from api.js
+        this.aiApi = new AiApi(); 
         this.initializeDOMElements();
         this.initializeEventListeners();
         this.initTheme();
     }
-
+    
     initializeDOMElements() {
         this.chatContainer = document.getElementById('chatContainer');
         this.messageInput = document.getElementById('messageInput');
@@ -64,7 +59,7 @@ class ChatApp {
 
     updateSendButtonState() {
         const hasMessage = this.messageInput.value.trim().length > 0;
-        const hasImage = !!this.previewImg.src;
+        const hasImage = this.previewImg.src.startsWith('data:image');
         this.sendBtn.disabled = !hasMessage && !hasImage;
     }
 
@@ -96,7 +91,6 @@ class ChatApp {
 
         if (!message && !imageSrc.startsWith('data:image')) return;
 
-        // FIX: Only pass the image source if it's a valid data URL
         const finalImageSrc = imageSrc.startsWith('data:image') ? imageSrc : null;
         
         let imageData = null;
@@ -115,7 +109,7 @@ class ChatApp {
         const typingIndicator = this.showTypingIndicator();
 
         try {
-            const responseText = await this.geminiApi.generateResponse(message, imageData);
+            const responseText = await this.aiApi.generateResponse(message, imageData);
             this.addMessage(responseText, 'ai');
         } catch (error) {
             this.addMessage(`An error occurred: ${error.message}. Please check the console for more details.`, 'ai');
