@@ -1,45 +1,31 @@
-class GeminiAPI {
-    constructor(apiKey) {
-        this.API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
+class AiApi {
+    constructor() {
+        // This now points to our single, smart serverless function.
+        this.API_URL = `/.netlify/functions/ai-proxy`;
     }
 
     async generateResponse(prompt, image) {
-        const parts = [{ text: prompt }];
-        if (image && image.data) {
-            parts.push({
-                inline_data: {
-                    mime_type: image.mime_type,
-                    data: image.data,
-                },
-            });
-        }
-
-        const requestBody = {
-            contents: [{ parts: parts }],
-        };
+        // The request body now just contains the prompt and image data.
+        const requestBody = { prompt, image };
 
         try {
             const response = await fetch(this.API_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(requestBody),
+                body: JSON.stringify(requestBody)
             });
-
+            
             if (!response.ok) {
                 const errorData = await response.json();
-                console.error("API Error Response:", errorData);
-                throw new Error(`API request failed with status ${response.status}: ${errorData.error.message}`);
+                throw new Error(errorData.error || 'Proxy request failed');
             }
 
+            // The proxy will return the AI's response directly.
             const data = await response.json();
-            if (data.candidates && data.candidates.length > 0) {
-                return data.candidates[0].content.parts[0].text.trim();
-            } else {
-                return "I'm sorry, I couldn't generate a response. Please try again.";
-            }
+            return data.text;
+
         } catch (error) {
-            console.error('Error generating response:', error);
-            return `An error occurred: ${error.message}. Please check the console for more details.`;
+            console.error('Error fetching from proxy:', error);
+            return `An error occurred: ${error.message}`;
         }
     }
-}

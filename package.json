@@ -1,0 +1,8 @@
+{
+  "name": "ai-chat-assistant",
+  "version": "1.0.0",
+  "description": "AI Chat Assistant with a secure, generalized proxy",
+  "dependencies": {
+    "node-fetch": "^2.6.1"
+  }
+}
