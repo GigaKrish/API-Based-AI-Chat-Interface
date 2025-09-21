@@ -1,4 +1,4 @@
-## Deploy at: https://chat-interface-by-krish.netlify.app
+## Deploy at https://chat-interface-by-krish.netlify.app
 <br>
 
 # An API-Based-AI-Chat-Interface
